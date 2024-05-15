@@ -114,6 +114,26 @@ p {
   max-height: 40px;
 }
 
+.project-link {
+  text-decoration: none;
+  color: #272142;
+  
+}
+.project-link:hover {
+  color: var(--branding-color);
+  transition: all 100ms ease-in-out;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--branding-color);
+}
+
+.link:hover {
+  color: #272142;
+  transition: all 100ms ease-in-out;
+}
+
 nav {
   padding: 20px;
 }
