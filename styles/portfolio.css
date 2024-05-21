@@ -241,3 +241,7 @@ footer .contact-box {
 text-decoration: none;
 color: white;
 }
+
+.white:hover {
+  color: white;
+}
