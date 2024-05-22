@@ -1,0 +1,163 @@
+@use "sass:math"
+@use "sass:map"
+// font import
+@import url('https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap')
+$size: 27
+$p: 38
+$R: math.sqrt($p * $p + $size * $size) /*/55.9px /* sqrt(var(--p) * var(--p) + var(--size)*var(--size)) */
+
+$sizeU: $size+px
+$pU: $p+px
+$RU: $R+px
+// global reset
+*
+	box-sizing: border-box
+	margin: auto
+// body setup
+body
+	position: relative
+	height: 100vh
+	display: flex
+	background: radial-gradient(circle at bottom right, #007cb7, #83b4b6 69%, #e6ecebaf 70%, #00abc5), #00abc5
+	overflow: hidden
+	perspective: 1440px
+	font-family: "Yeseva One"
+svg
+	position: absolute
+
+// the stuff
+.quote
+	position: relative
+	width: 90%
+	max-width: 90vh
+	aspect-ratio: 1/1
+	display: flex
+	flex-direction: column
+	border-radius: 20px 20px 50% 50%
+	overflow: hidden
+	text-align: center
+	word-wrap: no-wrap
+	filter: drop-shadow(-20px 20px 5px #006793)
+	figure
+		margin: auto
+		font-size: clamp(12vh, 12vh, 6rem)
+		filter: drop-shadow(0 0 5px #006793)
+		blockquote
+		span.wave
+			background: -50% 0%/ 200% 100% linear-gradient(90deg,#ffffff0f,#006793, #ffffff0f)
+			background-position: -50% 0
+			-webkit-background-clip: text
+			background-clip: text
+			color: transparent
+			animation: flow 5s linear infinite, sheen 10s linear infinite
+			&.oppo
+				animation-direction: reverse
+		figcaption
+			font-size: clamp(8vh, 8vh, 4rem)
+			text-align: right
+	.frame
+		position: absolute
+		width: 100%
+		height: 100%
+		background: #ffffff
+		@for $i from 0 to 3
+			&:nth-of-type(#{$i+1})
+				height: ($i+1)*33.3%
+				opacity: .8-($i+1)*.2
+.pond
+	position: absolute
+	width: 100%
+	height: 100%
+	background: #ffff000f
+	.film
+		position: absolute
+		width: 100%
+		height: 100%
+		backdrop-filter: blur(8px)
+		background-size: cover
+		filter: url(#displacementFilter) url(#goo)
+	.ripple
+		position: absolute
+		width: 50vw
+		aspect-ratio: 1/1
+		border-radius: 50%
+		border: 5px solid #fff
+		transform-origin: center
+		transform: translate(-50%, -50%) scale(0)
+		opacity: 0
+		animation: ripple 5s ease-in-out infinite
+		@for $i from 0 to 8
+			&:nth-of-type(#{$i+1})
+				width: random(25)+25vw 
+				top: random(100)+vh
+				left: random(100)+vw
+				border-width: random(3)+2+px
+				animation-duration: random(5)+5s
+				animation-delay: random(2)+random()+s
+	.fish
+		position: absolute
+		width: 38px
+		aspect-ratio: .3/1
+		// background: #fff
+		display: flex
+		flex-direction: column
+		filter: url(#goo)
+		animation: voyage 20s linear infinite
+		transform: rotate(38deg)
+		.part
+			width: 100%
+			// height: 33.3%
+			flex-grow: 2
+			background: #006793
+			&.head
+				transform-origin: bottom center
+				clip-path: polygon(50% 0%, 100% 100%, 0% 100%)
+				animation: swim 1.3s linear infinite
+			&.tail
+				transform-origin: top center
+				flex-grow: 4
+				clip-path: polygon(50% 100%, 100% 0%, 0% 0%)
+				animation: swim 1.3s linear infinite reverse
+		$fish: (0: ('top': 110vh, 'left': 30vw),1: ('top': 50vh, 'left': -5vw),2: ('top': 110vh, 'left': 70vw))
+		@for $i from 0 to 3
+			&:nth-of-type(#{$i+1})
+				top: map.get(map.get($fish, $i), 'top')
+				left: map.get(map.get($fish, $i), 'left')
+				animation-delay: $i+random()*.5s
+				animation-duration: random(10)+10s
+.wave
+	-webkit-mask: radial-gradient(#{$RU} at 50% calc(100% - (#{$sizeU} + #{$pU})),blue 99%,#0000 101%) , radial-gradient(#{$RU} at 50% calc(100% + #{$pU}),#0000 99%,red 101%)  repeat-x
+	-webkit-mask-size: calc(4*#{$sizeU}) 100%
+	-webkit-mask-position: calc(50% - 2*#{$sizeU}) 0,  50% calc(100% - #{$sizeU})
+	animation: flow 5s linear infinite
+	&.oppo
+		animation-direction: reverse
+
+// animations
+@keyframes flow
+	100%
+		-webkit-mask-position: calc(50% - 6*#{$sizeU}) 0, calc(50% - 4*#{$sizeU}) calc(200% - #{$sizeU})
+@keyframes swim
+	0%, 100%
+		transform: rotate(0deg)
+	33.3%
+		transform: rotate(15deg)
+	75%
+		transform: rotate(-15deg)
+@keyframes voyage
+	100%
+		translate: 40vw -130vh
+@keyframes sheen
+	100%
+		background-position: 150% 0%
+@keyframes ripple
+	50%
+		opacity: 1
+	100%
+		opacity: 0
+		transform: translate(-50%, -50%) scale(1)
+// media queries
+@media (max-width: 700px)
+	.quote 
+		figure, figure figcaption
+			font-size: clamp(30px, 10vw, 4rem)

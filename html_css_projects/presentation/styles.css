@@ -1,0 +1,63 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  overflow: hidden;
+}
+
+.presentation {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s, visibility 1s;
+  text-align: center;
+  padding: 20px;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+p {
+  font-size: 1.5em;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+button:hover {
+  background: #0056b3;
+}
